@@ -16,22 +16,22 @@ class Ui_UniqueWindow(object):
 
     #-- Upper Toolbar --
     
-    def New(self):
-        self.text.clear()
+   #-- def New(self):
+   #     self.text.clear()
 
-    def Open(self):
-        filename = QFileDialog.getOpenFileName(self, 'Open File')
-        f = open(filename, 'r')
-        filedata = f.read()
-        self.textArea1(filedata)
-        f.close()
+   # def Open(self):
+   #     filename = QFileDialog.getOpenFileName(self, 'Open File')
+   #     f = open(filename, 'r')
+   #     filedata = f.read()
+   #    self.textArea1(filedata)
+   #     f.close()
  
-    def Save(self):
-        filename = QFileDialog.getSaveFileName(self, 'Save File')
-        f = open(filename, 'w')
-        filedata = self.textArea1.toPlainText()
-        f.write(filedata)
-        f.close()
+   # def Save(self):
+   #     filename = QFileDialog.getSaveFileName(self, 'Save File')
+   #     f = open(filename, 'w')
+   #     filedata = self.textArea1.toPlainText()
+   #     f.write(filedata)
+   #     f.close() 
 
     
 
@@ -143,7 +143,7 @@ class Ui_UniqueWindow(object):
         self.actionToolbar = QtWidgets.QAction(UniqueWindow)
         self.actionToolbar.setObjectName("actionToolbar")
 
-        self.menuFile.addAction(open)
+       # self.menuFile.addAction(open)
         self.menuFile.addAction(self.actionNew_tab)
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionOpen)
