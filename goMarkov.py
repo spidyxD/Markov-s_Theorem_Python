@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore
-
+import os
 class Ui_UniqueWindow(object):
     #-- Tools --
     def Undo(self):
@@ -33,32 +33,55 @@ class Ui_UniqueWindow(object):
 
     def new_file(self):
         self.textArea1.clear()
-        self.textArea2.clear()
+        self.results.clear()
 
     def open_file(self):
-        filename = QFileDialog.getOpenFileName()
-        file = open(filename,'r')
-
-        with file:
-            text = file.read()
-            self.textArea1.setPlainText(text)
-            file.close()
+        name = QFileDialog.getOpenFileName()
+        if name[0]:
+            try:
+                file = open(name[0],'r')
+                with file:
+                    text = file.read()
+                self.textArea1.setPlainText(text)
+            except Exception as error:
+                            raise Exception("There was an error with the file: ".format(error))
    
-    #def save_file(self):
-        
+    def save_file(self):
+        information = self.textArea1.toPlainText()        
 
     def save_fileAs(self):
-        dialog = QFileDialog()
-        dialog.setNameFilters("Text files (*.txt)")
-        dialog.getOpenFileName()
-        filename = dialog.getSaveFileName()
+        information = self.textArea1.toPlainText()
         
-        file = open(filename, 'w')
+        if information:
 
-        with file:
-            filedata = self.textArea1.toPlainText()
-            file.write(filedata)
-            file.close()
+            path = QFileDialog.getSaveFileName(self.menuFile, 'Save As', os.getenv('HOME'), 'TXT(*.txt)')
+            
+            try:
+                file = open(path[0], 'w')
+
+                with file:    
+                    file.write(information)
+
+            except Exception as error:
+                raise Exception("There was an error saving the file: ".format(error))
+
+            self.currentFile = path[0]
+            self.UniqueWindow.setWindowTitle(file.name.split("/")[-1])
+        
+        else:
+            msg = QMessageBox(self.centralwidget)
+            msg.setText("You cannot save an empty file")
+            msg.setInformativeText("Please type something before saving")
+            msg.setWindowTitle("Warning!")
+            msg.exec_()
+
+    def about(self):            
+         msg = QMessageBox(self.centralwidget)
+         msg.setText("Welcome to GoMarkov")
+         msg.setInformativeText("This is a educational project")
+         msg.setWindowTitle("GoMarkov")
+         msg.exec_()
+
 
     #-- Init interface complements
     def setupUi(self, UniqueWindow):
@@ -118,9 +141,10 @@ class Ui_UniqueWindow(object):
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
         self.verticalLayout_2.addWidget(self.line)
-        self.textArea2 = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.textArea2.setObjectName("textArea2")
-        self.verticalLayout_2.addWidget(self.textArea2)
+        self.results = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.results.setObjectName("results")
+        self.results.setEnabled(False)
+        self.verticalLayout_2.addWidget(self.results)
         self.verticalLayout_3.addLayout(self.verticalLayout_2)
         UniqueWindow.setCentralWidget(self.centralwidget)
 
@@ -201,7 +225,7 @@ class Ui_UniqueWindow(object):
         self.actionSave.setObjectName("actionSave")
         self.actionSave.setShortcut("Ctrl+S")
         self.actionSave.setStatusTip("Save file")
-        self.actionSave.triggered.connect(self.save_fileAs)  
+        self.actionSave.triggered.connect(self.save_file)  
 
         self.actionSave_As = QtWidgets.QAction(UniqueWindow)
         self.actionSave_As.setObjectName("actionSave_As")
@@ -215,6 +239,7 @@ class Ui_UniqueWindow(object):
 
         self.actionAbout = QtWidgets.QAction(UniqueWindow)
         self.actionAbout.setObjectName("actionAbout")
+        self.actionAbout.triggered.connect(self.about)
 
         self.actionCut = QtWidgets.QAction(UniqueWindow)
         self.actionCut.setObjectName("actionCut")
