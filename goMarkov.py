@@ -11,8 +11,33 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore
 import os, sys
+from colorama import *
 
 class Ui_UniqueWindow(object):
+    #-- program functions
+    def defaultFormat(self):
+       comentary = "%"
+       dheader = "GoMarkov Project \n \n" 
+       symbols = "#symbols abcdefghijklmnopqrstuvwxyz0123456789 \n"
+       variables = "#vars wxyz \n"
+       markers = "#markers αβγδ \n"
+       self.textArea1.setPlainText(dheader+symbols+variables+markers)
+
+    def duplicarHilera(self,chain):
+        chain = chain * 2
+        return chain
+
+    def esPalindromo(chain):
+        standart = str(chain).lower().replace(' ','')
+        return standart == standart[::-1]
+
+    def sumaBinarios(a,b):
+        return bin(int(a, 2) + int(b, 2))
+
+    def multBinarios(a,b):
+        return bin(int(a, 2) * int(b, 2))
+
+
      #-- Tools --
     def Undo(self):
        self.textArea1.undo()
@@ -48,31 +73,40 @@ class Ui_UniqueWindow(object):
                             raise Exception("There was an error with the file: ".format(error))
    
     def save_file(self):
-        information = self.textArea1.toPlainText()        
-
-    def save_fileAs(self):
-        information = self.textArea1.toPlainText()
-        
-        if information:
-
-            path = QFileDialog.getSaveFileName(self.menuFile, 'Save As', os.getenv('HOME'), 'TXT(*.txt)')
-            
+        data = self.textArea1.toPlainText()
+        if data:
+            path = QFileDialog.getSaveFileName(self.menuFile, 'Save As', os.getenv('HOME'), 'txt(*.txt)')    
             try:
-                file = open(path[0], 'w')
-
+                file = open(path[0], 'w', encoding='utf-8')
                 with file:    
-                    file.write(information)
-
+                    file.write(data) 
             except Exception as error:
                 raise Exception("There was an error saving the file: ".format(error))
-
             self.currentFile = path[0]
-            self.UniqueWindow.setWindowTitle(file.name.split("/")[-1])
-        
+            self.UniqueWindow.setWindowTitle(file.name.split("/")[-1]) 
         else:
             msg = QMessageBox(self.centralwidget)
             msg.setText("You cannot save an empty file")
-            msg.setInformativeText("Please type something before saving")
+            msg.setInformativeText("Please write something before saving")
+            msg.setWindowTitle("Warning!")
+            msg.exec_()   
+
+    def save_fileAs(self):
+        data = self.textArea1.toPlainText()
+        if data:
+            path = QFileDialog.getSaveFileName(self.menuFile, 'Save As', os.getenv('HOME'), 'txt(*.txt)')    
+            try:
+                file = open(path[0], 'w', encoding='utf-8')
+                with file:    
+                    file.write(data)
+            except Exception as error:
+                raise Exception("There was an error saving the file: ".format(error))
+            self.currentFile = path[0]
+            self.UniqueWindow.setWindowTitle(file.name.split("/")[-1]) 
+        else:
+            msg = QMessageBox(self.centralwidget)
+            msg.setText("You cannot save an empty file")
+            msg.setInformativeText("Please write something before saving")
             msg.setWindowTitle("Warning!")
             msg.exec_()
 
@@ -82,6 +116,9 @@ class Ui_UniqueWindow(object):
          msg.setInformativeText("This is a educational project")
          msg.setWindowTitle("GoMarkov")
          msg.exec_()
+
+    def exitApp(self):
+        sys.exit()     
 
     def putAlfa(self):
         cursor = self.textArea1.textCursor()
@@ -303,10 +340,10 @@ class Ui_UniqueWindow(object):
         self.gridLayout.addWidget(self.textArea2, 4, 0, 1, 6)
         self.Run = QtWidgets.QPushButton(self.centralwidget)
         self.Run.setObjectName("Run")
-        self.gridLayout.addWidget(self.Run, 0, 3, 1, 1)
+        self.gridLayout.addWidget(self.Run, 0, 1, 1, 1)
         self.Stop = QtWidgets.QPushButton(self.centralwidget)
-        self.Stop.setObjectName("Stop")
-        self.gridLayout.addWidget(self.Stop, 0, 1, 1, 1)
+        self.Stop.setObjectName("Steps")
+        self.gridLayout.addWidget(self.Stop, 0, 3, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 0, 4, 1, 1)
         self.verticalLayout_3.addLayout(self.gridLayout)
@@ -341,6 +378,7 @@ class Ui_UniqueWindow(object):
         self.actionExit = QtWidgets.QAction(UniqueWindow)
         self.actionExit.setObjectName("actionExit")
         self.actionExit.setShortcut("Ctrl+E")
+        self.actionExit.triggered.connect(self.exitApp)
 
         self.actionCopy = QtWidgets.QAction(UniqueWindow)
         self.actionCopy.setObjectName("actionCopy")
@@ -393,6 +431,10 @@ class Ui_UniqueWindow(object):
         self.actionRun.setObjectName("actionRun")
         self.actionRun.setShortcut("Ctrl+R")
 
+        self.actionStep = QtWidgets.QAction(UniqueWindow)
+        self.actionStep.setObjectName("actionStep")
+        self.actionStep.setShortcut("Ctrl+T")
+
         self.actionAbout = QtWidgets.QAction(UniqueWindow)
         self.actionAbout.setObjectName("actionAbout")
         self.actionAbout.triggered.connect(self.about)
@@ -426,7 +468,7 @@ class Ui_UniqueWindow(object):
         self.menuView.addAction(self.actionToolbar)
 
         self.menuGoMarcov.addAction(self.actionRun)
-
+        self.menuGoMarcov.addAction(self.actionStep)
         self.menuHelp.addAction(self.actionAbout)
 
         self.menuBar.addAction(self.menuFile.menuAction())
@@ -435,7 +477,7 @@ class Ui_UniqueWindow(object):
         self.menuBar.addAction(self.menuGoMarcov.menuAction())
         self.menuBar.addAction(self.menuHelp.menuAction())
 
-         #FILE Menu Management:
+         #Pallete events:
         self.alfabtn.clicked.connect(self.putAlfa)
         self.betabtn.clicked.connect(self.putBeta)
         self.gammabtn.clicked.connect(self.putGamma)
@@ -469,7 +511,8 @@ class Ui_UniqueWindow(object):
     def retranslateUi(self, UniqueWindow):
         _translate = QtCore.QCoreApplication.translate
         UniqueWindow.setWindowTitle(_translate("UniqueWindow", "GoMarkov"))
-        self.groupPalette.setTitle(_translate("UniqueWindow", "Palette"))
+        UniqueWindow.setWindowIcon(QtGui.QIcon("icons/geek.png"))
+        self.groupPalette.setTitle(_translate("UniqueWindow", "Symbols"))
         self.alfabtn.setText(_translate("UniqueWindow", "α"))
         self.dsetabtn.setText(_translate("UniqueWindow", "ζ"))
         self.omicronbtn.setText(_translate("UniqueWindow", "ο"))
@@ -496,8 +539,8 @@ class Ui_UniqueWindow(object):
         self.kappabtn.setText(_translate("UniqueWindow", "κ"))
         self.xibtn.setText(_translate("UniqueWindow", "ξ"))
         self.arrowbtn.setText(_translate("UniqueWindow", "→"))
-        self.Run.setText(_translate("UniqueWindow", "Stop"))
-        self.Stop.setText(_translate("UniqueWindow", "Run"))
+        self.Run.setText(_translate("UniqueWindow", "Run"))
+        self.Stop.setText(_translate("UniqueWindow", "Step by step"))
         self.menuFile.setTitle(_translate("UniqueWindow", "File"))
         self.menuEdit.setTitle(_translate("UniqueWindow", "Edit"))
         self.menuView.setTitle(_translate("UniqueWindow", "View"))
@@ -516,6 +559,7 @@ class Ui_UniqueWindow(object):
         self.actionSave.setText(_translate("UniqueWindow", "Save"))
         self.actionSave_As.setText(_translate("UniqueWindow", "Save As"))
         self.actionRun.setText(_translate("UniqueWindow", "Run"))
+        self.actionStep.setText(_translate("UniqueWindow", "StepByStep"))
         self.actionAbout.setText(_translate("UniqueWindow", "About"))
         self.actionCut.setText(_translate("UniqueWindow", "Cut"))
         self.actionSelect_all.setText(_translate("UniqueWindow", "Select all"))
@@ -528,6 +572,7 @@ if __name__ == "__main__":
     UniqueWindow = QtWidgets.QMainWindow()
     ui = Ui_UniqueWindow()
     ui.setupUi(UniqueWindow)
+    ui.defaultFormat()
     UniqueWindow.show()
     sys.exit(app.exec_())
 
