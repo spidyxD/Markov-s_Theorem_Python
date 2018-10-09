@@ -1,17 +1,15 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'goMarkov.ui'
-#
-# Created by: PyQt5 UI code generator 5.11.2
-#
-# WARNING! All changes made in this file will be lost!
-
+#Proyecto de paradigmas 
+#Alumnos:
+#Roger Amador Villagra
+#David 
+#Profesor: Msc George Alfaro
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore
 import os, sys
 from colorama import *
+import module as mod
 
 class Ui_UniqueWindow(object):
     #-- program functions
@@ -22,9 +20,6 @@ class Ui_UniqueWindow(object):
        variables = "#vars wxyz \n"
        markers = "#markers αβγδ \n"
        self.textArea1.setPlainText(dheader+symbols+variables+markers)
-
-    
-                        
 
      #-- Tools --
     def Undo(self):
@@ -101,13 +96,14 @@ class Ui_UniqueWindow(object):
     def about(self):            
          msg = QMessageBox(self.centralwidget)
          msg.setText("Welcome to GoMarkov")
-         msg.setInformativeText("This is a educational project")
+         msg.setInformativeText("This is a educational project created by Roger Amador Villagra and David")
          msg.setWindowTitle("GoMarkov")
          msg.exec_()
 
     def exitApp(self):
-        sys.exit()     
+        sys.exit()    
 
+    #Pallette functions
     def putAlfa(self):
         cursor = self.textArea1.textCursor()
         self.textArea1.insertPlainText("\u03B1")
@@ -212,11 +208,17 @@ class Ui_UniqueWindow(object):
         cursor = self.textArea1.textCursor()
         self.textArea1.insertPlainText("\u03C9")
 
+    def putEmpty(self):
+        cursor = self.textArea1.textCursor()
+        self.textArea1.insertPlainText("\u039B" + "^3")
+        cursor.movePosition(cursor.Right, cursor.KeepAnchor,  3)
+
     def putArrow(self):
         cursor = self.textArea1.textCursor()
         self.textArea1.insertPlainText("\u2192")
 
     def setupUi(self, UniqueWindow):
+        #build widgets
         UniqueWindow.setObjectName("UniqueWindow")
         UniqueWindow.resize(762, 585)
         UniqueWindow.setAnimated(False)
@@ -314,6 +316,9 @@ class Ui_UniqueWindow(object):
         self.xibtn = QtWidgets.QPushButton(self.groupPalette)
         self.xibtn.setObjectName("xibtn")
         self.gridLayout_2.addWidget(self.xibtn, 2, 4, 1, 1)
+        self.emptybtn = QtWidgets.QPushButton(self.groupPalette)
+        self.emptybtn.setObjectName("emptybtn")
+        self.gridLayout_2.addWidget(self.emptybtn, 5, 1, 1, 1)
         self.arrowbtn = QtWidgets.QPushButton(self.groupPalette)
         self.arrowbtn.setObjectName("arrowbtn")
         self.gridLayout_2.addWidget(self.arrowbtn, 5, 2, 1, 1)
@@ -354,7 +359,7 @@ class Ui_UniqueWindow(object):
         self.statusBar.setObjectName("statusBar")
         UniqueWindow.setStatusBar(self.statusBar)
 
-         #Actions 
+         #widget Actions 
         self.actionNew = QtWidgets.QAction(UniqueWindow)
         self.actionNew.setObjectName("actionNew")
         self.actionNew.setStatusTip("Open new window")
@@ -491,6 +496,7 @@ class Ui_UniqueWindow(object):
         self.jibtn.clicked.connect(self.putJi)
         self.psibtn.clicked.connect(self.putPsi)
         self.omegabtn.clicked.connect(self.putOmega)
+        self.emptybtn.clicked.connect(self.putEmpty)
         self.arrowbtn.clicked.connect(self.putArrow)
 
         self.retranslateUi(UniqueWindow)
@@ -526,6 +532,7 @@ class Ui_UniqueWindow(object):
         self.omegabtn.setText(_translate("UniqueWindow", "ω"))
         self.kappabtn.setText(_translate("UniqueWindow", "κ"))
         self.xibtn.setText(_translate("UniqueWindow", "ξ"))
+        self.emptybtn.setText(_translate("UniqueWindow", "Λ3"))
         self.arrowbtn.setText(_translate("UniqueWindow", "→"))
         self.Run.setText(_translate("UniqueWindow", "Run"))
         self.Stop.setText(_translate("UniqueWindow", "Step by step"))
