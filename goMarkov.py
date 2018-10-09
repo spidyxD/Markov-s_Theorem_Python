@@ -23,20 +23,8 @@ class Ui_UniqueWindow(object):
        markers = "#markers αβγδ \n"
        self.textArea1.setPlainText(dheader+symbols+variables+markers)
 
-    def duplicarHilera(self,chain):
-        chain = chain * 2
-        return chain
-
-    def esPalindromo(chain):
-        standart = str(chain).lower().replace(' ','')
-        return standart == standart[::-1]
-
-    def sumaBinarios(a,b):
-        return bin(int(a, 2) + int(b, 2))
-
-    def multBinarios(a,b):
-        return bin(int(a, 2) * int(b, 2))
-
+    
+                        
 
      #-- Tools --
     def Undo(self):
