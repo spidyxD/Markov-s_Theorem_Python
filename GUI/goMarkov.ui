@@ -20,7 +20,7 @@
    <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="0" colspan="6">
+      <item row="1" column="0" colspan="3">
        <widget class="QPlainTextEdit" name="textArea1">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -30,7 +30,14 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="7">
+      <item row="2" column="0" colspan="3">
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
        <widget class="QGroupBox" name="groupPalette">
         <property name="maximumSize">
          <size>
@@ -224,45 +231,61 @@
            </property>
           </widget>
          </item>
+         <item row="5" column="1">
+          <widget class="QPushButton" name="emptybtn">
+           <property name="text">
+            <string>Λ3</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
-      <item row="3" column="0" colspan="6">
-       <widget class="Line" name="line">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0" colspan="6">
+      <item row="3" column="0" colspan="3">
        <widget class="QPlainTextEdit" name="textArea2"/>
       </item>
-      <item row="0" column="3">
-       <widget class="QPushButton" name="Run">
-        <property name="text">
-         <string>Stop</string>
+      <item row="3" column="3">
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>Execute line</string>
         </property>
+        <widget class="QLineEdit" name="lineExecute">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>181</width>
+           <height>20</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="Run">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Run</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="Steps">
+         <property name="geometry">
+          <rect>
+           <x>90</x>
+           <y>50</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Step by step</string>
+         </property>
+        </widget>
        </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="Stop">
-        <property name="text">
-         <string>Run</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </item>
@@ -312,6 +335,7 @@
      <string>GoMarcov</string>
     </property>
     <addaction name="actionRun"/>
+    <addaction name="actionSteps"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -409,6 +433,11 @@
   <action name="actionToolbar">
    <property name="text">
     <string>Toolbar</string>
+   </property>
+  </action>
+  <action name="actionSteps">
+   <property name="text">
+    <string>StepByStep</string>
    </property>
   </action>
  </widget>
