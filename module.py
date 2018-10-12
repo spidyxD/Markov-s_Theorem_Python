@@ -15,6 +15,7 @@ def esPalindromo(chain):
 
 # 4- convertir un número binario en su equivalente unario
 
+
 # 5- suma de binarios
 def sumaBinarios(a,b):
     return bin(int(a,2) + int(b,2))
@@ -31,7 +32,8 @@ def multBinarios(a,b):
 def sumaDecimales(a,b):
     return float(a) + float(b)
    
-# 9- esta funcion preserva el orden original de la cadena, solo elimina los caracteres repetidos
+# 9- esta funcion preserva el orden original de la cadena, 
+# solo elimina los caracteres repetidos
 def eliminaRepetido(chain):
     aux = set()    
     c = [x for x in chain if not (x in aux or aux.add(x))]
@@ -39,6 +41,7 @@ def eliminaRepetido(chain):
 
 # 10- verificar la estructura de una hilera que contenga únicamente paréntesis, 
 # que se encuentren correctamente balanceados
+
 
 def resultados():
    print("escriba un valor a")
