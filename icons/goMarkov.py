@@ -15,27 +15,13 @@ import module as mod
 class Ui_UniqueWindow(object):
     #-- program functions
     def defaultFormat(self):
-       comentary1 = "% this is a comentary\n"
-       dheader = "GoMarkov Project\n \n" 
-       symbols = "#symbols abcdefghijklmnopqrstuvwxyz0123456789\n"
-       variables = "#vars wxyz\n"
-       markers = "#markers αβγδ\n"
-       comentary1 = "% Rules\n"
-       self.textArea1.setPlainText(dheader + symbols + variables + markers + comentary1)
-       
-    def sendValues(self):
-         text = self.textArea1.toPlainText()
-         symbols = text[text.find("#symbols")+9:text.find("#vars")-1]
-         symbols.rstrip('\n')
-         variables = text[text.find("#vars")+6:text.find("#markers")-1]
-         variables.rstrip('\n')
-         markers = text[text.find("#markers")+9:text.find("% Rules")-1] 
-         markers.rstrip('\n')
-         rules = text[text.find("% Rules")+7:len(text)]
-         rules.rstrip('\n')
-         chain = self.lineExecute.text()
-         mod.getValues(symbols,variables,markers,rules,chain)
-        
+       comentary = "%"
+       dheader = "GoMarkov Project \n \n" 
+       symbols = "#symbols abcdefghijklmnopqrstuvwxyz0123456789 \n"
+       variables = "#vars wxyz \n"
+       markers = "#markers αβγδ \n"
+       self.textArea1.setPlainText(dheader+symbols+variables+markers)
+
      #-- Tools --
     def Undo(self):
        self.textArea1.undo()
@@ -114,25 +100,6 @@ class Ui_UniqueWindow(object):
          msg.setInformativeText("This is a educational project created by Roger Amador Villagra and David")
          msg.setWindowTitle("GoMarkov")
          msg.exec_()
-
-    #funcion que valida en la interfaz el contenido de la hilera con los simbolos si no coincide muestra mensaje de error
-    def validateChain(self): 
-        self.sendValues()
-        if not(mod.validateSymbols()):
-            msg = QMessageBox(self.centralwidget)
-            msg.setText("Warning")
-            msg.setInformativeText("Ningun simbolo de entrada coincide con la hilera introducida")
-            msg.setWindowTitle("Alert")
-            msg.exec_()
-        else:
-            #Esto se debe de comentar/eliminar al momento en que las demas funciones esten listas ya que no es necesario alertar si la cadena 
-            #coincide 
-            msg = QMessageBox(self.centralwidget)
-            msg.setText("Success")
-            msg.setInformativeText("hilera correcta")
-            msg.setWindowTitle("Message")
-            msg.exec_()    
-
 
     def exitApp(self):
         sys.exit()    
@@ -252,6 +219,7 @@ class Ui_UniqueWindow(object):
         self.textArea1.insertPlainText("\u2192")
 
     def setupUi(self, UniqueWindow):
+        #build widgets
         UniqueWindow.setObjectName("UniqueWindow")
         UniqueWindow.resize(762, 585)
         UniqueWindow.setAnimated(False)
@@ -268,12 +236,7 @@ class Ui_UniqueWindow(object):
         sizePolicy.setHeightForWidth(self.textArea1.sizePolicy().hasHeightForWidth())
         self.textArea1.setSizePolicy(sizePolicy)
         self.textArea1.setObjectName("textArea1")
-        self.gridLayout.addWidget(self.textArea1, 1, 0, 1, 3)
-        self.line = QtWidgets.QFrame(self.centralwidget)
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line.setObjectName("line")
-        self.gridLayout.addWidget(self.line, 2, 0, 1, 3)
+        self.gridLayout.addWidget(self.textArea1, 2, 0, 1, 6)
         self.groupPalette = QtWidgets.QGroupBox(self.centralwidget)
         self.groupPalette.setMaximumSize(QtCore.QSize(200, 16777215))
         self.groupPalette.setObjectName("groupPalette")
@@ -354,28 +317,29 @@ class Ui_UniqueWindow(object):
         self.xibtn = QtWidgets.QPushButton(self.groupPalette)
         self.xibtn.setObjectName("xibtn")
         self.gridLayout_2.addWidget(self.xibtn, 2, 4, 1, 1)
-        self.arrowbtn = QtWidgets.QPushButton(self.groupPalette)
-        self.arrowbtn.setObjectName("arrowbtn")
-        self.gridLayout_2.addWidget(self.arrowbtn, 5, 2, 1, 1)
         self.emptybtn = QtWidgets.QPushButton(self.groupPalette)
         self.emptybtn.setObjectName("emptybtn")
         self.gridLayout_2.addWidget(self.emptybtn, 5, 1, 1, 1)
-        self.gridLayout.addWidget(self.groupPalette, 1, 3, 1, 1)
+        self.arrowbtn = QtWidgets.QPushButton(self.groupPalette)
+        self.arrowbtn.setObjectName("arrowbtn")
+        self.gridLayout_2.addWidget(self.arrowbtn, 5, 2, 1, 1)
+        self.gridLayout.addWidget(self.groupPalette, 2, 7, 1, 1)
+        self.line = QtWidgets.QFrame(self.centralwidget)
+        self.line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.gridLayout.addWidget(self.line, 3, 0, 1, 6)
         self.textArea2 = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.textArea2.setObjectName("textArea2")
-        self.gridLayout.addWidget(self.textArea2, 3, 0, 1, 3)
-        self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setObjectName("groupBox")
-        self.lineExecute = QtWidgets.QLineEdit(self.groupBox)
-        self.lineExecute.setGeometry(QtCore.QRect(0, 20, 181, 20))
-        self.lineExecute.setObjectName("lineExecute")
-        self.Run = QtWidgets.QPushButton(self.groupBox)
-        self.Run.setGeometry(QtCore.QRect(10, 50, 75, 23))
+        self.gridLayout.addWidget(self.textArea2, 4, 0, 1, 6)
+        self.Run = QtWidgets.QPushButton(self.centralwidget)
         self.Run.setObjectName("Run")
-        self.stepsbtn = QtWidgets.QPushButton(self.groupBox)
-        self.stepsbtn.setGeometry(QtCore.QRect(90, 50, 75, 23))
-        self.stepsbtn.setObjectName("Steps")
-        self.gridLayout.addWidget(self.groupBox, 3, 3, 1, 1)
+        self.gridLayout.addWidget(self.Run, 0, 1, 1, 1)
+        self.Stop = QtWidgets.QPushButton(self.centralwidget)
+        self.Stop.setObjectName("Steps")
+        self.gridLayout.addWidget(self.Stop, 0, 3, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 0, 4, 1, 1)
         self.verticalLayout_3.addLayout(self.gridLayout)
         UniqueWindow.setCentralWidget(self.centralwidget)
         self.menuBar = QtWidgets.QMenuBar(UniqueWindow)
@@ -536,9 +500,6 @@ class Ui_UniqueWindow(object):
         self.emptybtn.clicked.connect(self.putEmpty)
         self.arrowbtn.clicked.connect(self.putArrow)
 
-        #Buttons actions
-        self.Run.clicked.connect(self.validateChain)
-
         self.retranslateUi(UniqueWindow)
         QtCore.QMetaObject.connectSlotsByName(UniqueWindow)
 
@@ -546,7 +507,7 @@ class Ui_UniqueWindow(object):
         _translate = QtCore.QCoreApplication.translate
         UniqueWindow.setWindowTitle(_translate("UniqueWindow", "GoMarkov"))
         UniqueWindow.setWindowIcon(QtGui.QIcon("icons/geek.png"))
-        self.groupPalette.setTitle(_translate("UniqueWindow", "Palette"))
+        self.groupPalette.setTitle(_translate("UniqueWindow", "Symbols"))
         self.alfabtn.setText(_translate("UniqueWindow", "α"))
         self.dsetabtn.setText(_translate("UniqueWindow", "ζ"))
         self.omicronbtn.setText(_translate("UniqueWindow", "ο"))
@@ -572,11 +533,10 @@ class Ui_UniqueWindow(object):
         self.omegabtn.setText(_translate("UniqueWindow", "ω"))
         self.kappabtn.setText(_translate("UniqueWindow", "κ"))
         self.xibtn.setText(_translate("UniqueWindow", "ξ"))
-        self.arrowbtn.setText(_translate("UniqueWindow", "→"))
         self.emptybtn.setText(_translate("UniqueWindow", "Λ3"))
-        self.groupBox.setTitle(_translate("UniqueWindow", "Execute line"))
+        self.arrowbtn.setText(_translate("UniqueWindow", "→"))
         self.Run.setText(_translate("UniqueWindow", "Run"))
-        self.actionStep.setText(_translate("UniqueWindow", "Step by step"))
+        self.Stop.setText(_translate("UniqueWindow", "Step by step"))
         self.menuFile.setTitle(_translate("UniqueWindow", "File"))
         self.menuEdit.setTitle(_translate("UniqueWindow", "Edit"))
         self.menuView.setTitle(_translate("UniqueWindow", "View"))
@@ -595,11 +555,11 @@ class Ui_UniqueWindow(object):
         self.actionSave.setText(_translate("UniqueWindow", "Save"))
         self.actionSave_As.setText(_translate("UniqueWindow", "Save As"))
         self.actionRun.setText(_translate("UniqueWindow", "Run"))
+        self.actionStep.setText(_translate("UniqueWindow", "StepByStep"))
         self.actionAbout.setText(_translate("UniqueWindow", "About"))
         self.actionCut.setText(_translate("UniqueWindow", "Cut"))
         self.actionSelect_all.setText(_translate("UniqueWindow", "Select all"))
         self.actionToolbar.setText(_translate("UniqueWindow", "Toolbar"))
-        self.stepsbtn.setText(_translate("UniqueWindow", "Step By Step"))
 
 
 if __name__ == "__main__":
