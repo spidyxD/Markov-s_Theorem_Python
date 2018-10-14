@@ -15,13 +15,27 @@ import module as mod
 class Ui_UniqueWindow(object):
     #-- program functions
     def defaultFormat(self):
-       comentary = "%"
-       dheader = "GoMarkov Project \n \n" 
-       symbols = "#symbols abcdefghijklmnopqrstuvwxyz0123456789 \n"
-       variables = "#vars wxyz \n"
-       markers = "#markers αβγδ \n"
-       self.textArea1.setPlainText(dheader+symbols+variables+markers)
-
+       comentary1 = "% this is a comentary\n"
+       dheader = "GoMarkov Project\n \n" 
+       symbols = "#symbols abcdefghijklmnopqrstuvwxyz0123456789\n"
+       variables = "#vars wxyz\n"
+       markers = "#markers αβγδ\n"
+       comentary1 = "% Rules\n"
+       self.textArea1.setPlainText(dheader + symbols + variables + markers + comentary1)
+       
+    def sendValues(self):
+         text = self.textArea1.toPlainText()
+         symbols = text[text.find("#symbols")+9:text.find("#vars")-1]
+         symbols.rstrip('\n')
+         variables = text[text.find("#vars")+6:text.find("#markers")-1]
+         variables.rstrip('\n')
+         markers = text[text.find("#markers")+9:text.find("% Rules")-1] 
+         markers.rstrip('\n')
+         rules = text[text.find("% Rules")+7:len(text)]
+         rules.rstrip('\n')
+         chain = self.lineExecute.text()
+         mod.getValues(symbols,variables,markers,rules,chain)
+        
      #-- Tools --
     def Undo(self):
        self.textArea1.undo()
@@ -100,6 +114,25 @@ class Ui_UniqueWindow(object):
          msg.setInformativeText("This is a educational project created by Roger Amador Villagra and David")
          msg.setWindowTitle("GoMarkov")
          msg.exec_()
+
+    #funcion que valida en la interfaz el contenido de la hilera con los simbolos si no coincide muestra mensaje de error
+    def validateChain(self): 
+        self.sendValues()
+        if not(mod.validateSymbols()):
+            msg = QMessageBox(self.centralwidget)
+            msg.setText("Warning")
+            msg.setInformativeText("Ningun simbolo de entrada coincide con la hilera introducida")
+            msg.setWindowTitle("Alert")
+            msg.exec_()
+        else:
+            #Esto se debe de comentar/eliminar al momento en que las demas funciones esten listas ya que no es necesario alertar si la cadena 
+            #coincide 
+            msg = QMessageBox(self.centralwidget)
+            msg.setText("Success")
+            msg.setInformativeText("hilera correcta")
+            msg.setWindowTitle("Message")
+            msg.exec_()    
+
 
     def exitApp(self):
         sys.exit()    
@@ -363,8 +396,6 @@ class Ui_UniqueWindow(object):
         self.statusBar.setObjectName("statusBar")
         UniqueWindow.setStatusBar(self.statusBar)
 
-
-
          #widget Actions 
         self.actionNew = QtWidgets.QAction(UniqueWindow)
         self.actionNew.setObjectName("actionNew")
@@ -504,6 +535,10 @@ class Ui_UniqueWindow(object):
         self.omegabtn.clicked.connect(self.putOmega)
         self.emptybtn.clicked.connect(self.putEmpty)
         self.arrowbtn.clicked.connect(self.putArrow)
+
+        #Buttons actions
+        self.Run.clicked.connect(self.validateChain)
+
         self.retranslateUi(UniqueWindow)
         QtCore.QMetaObject.connectSlotsByName(UniqueWindow)
 
