@@ -118,10 +118,10 @@ class Ui_UniqueWindow(object):
     #funcion que valida en la interfaz el contenido de la hilera con los simbolos si no coincide muestra mensaje de error
     def validateChain(self): 
         self.sendValues()
-        if not(mod.validateSymbols()):
+        if  mod.validateSymbols() == False:
             msg = QMessageBox(self.centralwidget)
             msg.setText("Warning")
-            msg.setInformativeText("Ningun simbolo de entrada coincide con la hilera introducida")
+            msg.setInformativeText("Simbolos de entrada no coinciden con la hilera introducida")
             msg.setWindowTitle("Alert")
             msg.exec_()
         else:

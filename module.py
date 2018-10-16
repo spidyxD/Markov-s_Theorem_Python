@@ -59,23 +59,17 @@ def getChain():
 
 #funcion que valida si la hilera de entrada contiene los simbolos permitidos
 def validateSymbols():
-    flagS = None
+    flagS = True
     #flagM = None
-    for sy in getSymbols():
-        #for m in getMarkers():
-            if not (getChain().find(sy) == -1):
-                flagS = True
-            #elif not (getChain().find(m) == -1):
-                #flagM = True
-            else:
-                for ch in getChain():
-                    if (getSymbols().find(ch) == -1):
-                       flagS = False
-                       break
-                       #flagM = False    
-                    else:
-                       flagS = True
-                       #flagM = True
+    print(getChain() + " / " + getSymbols())
+    for ch in getChain():
+        if (getSymbols().find(ch) == -1):
+            flagS = False
+            break
+            #flagM = False    
+        else:
+            flagS = True
+            #flagM = True
     return flagS
 
 
