@@ -124,6 +124,8 @@ class Ui_UniqueWindow(object):
             msg.setInformativeText("Simbolos de entrada no coinciden con la hilera introducida")
             msg.setWindowTitle("Alert")
             msg.exec_()
+            return False
+        return True    
         """else:
             #Esto se debe de comentar/eliminar al momento en que las demas funciones esten listas ya que no es necesario alertar si la cadena 
             #coincide 
@@ -140,15 +142,17 @@ class Ui_UniqueWindow(object):
             print(ms)
     
     def analisis(self):
-        self.validateChain()
-        text = self.textArea1.toPlainText()
-        rules = text[text.find("% Rules")+7:len(text)]
-        rules.rstrip('\n')
-        self.sendValues()
-        self.textArea2.clear()
-        cursor = self.textArea2.textCursor()
-        self.textArea2.insertPlainText(AnalisisHilera(mod.getChain(),rules))
-        cursor.movePosition(cursor.Right, cursor.KeepAnchor,  3)
+        if self.validateChain():
+           text = self.textArea1.toPlainText()
+           rules = text[text.find("% Rules")+7:len(text)]
+           rules.rstrip('\n')
+           self.sendValues()
+           self.textArea2.clear()
+           cursor = self.textArea2.textCursor()
+           self.textArea2.insertPlainText(AnalisisHilera(mod.getChain(),rules))
+           cursor.movePosition(cursor.Right, cursor.KeepAnchor,  3)
+        else:
+          print("error")     
 
     def exitApp(self):
         sys.exit()    
