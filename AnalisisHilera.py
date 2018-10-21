@@ -9,7 +9,7 @@ def getRules(rule):
 
 
 def AnalisisHilera(hilera,rules):
-    Reglas= getRules()
+    Reglas= getRules(rules)
     print(rules + " "+ hilera)
     r0 = Regla("ab","b",True,0)
     r1 = Regla("bb","a",True,1)
