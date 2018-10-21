@@ -21,10 +21,10 @@ def AnalisisHilera(hilera,rules):
     Reglas = getRules(rules)
     for r in getRules(rules):
       print("entrada: "+r.entrada +" / " +"salida: "+r.salida)  
-    reglaAct = 0 #La regla a evaluar en la lista de Reglas
+    reglaAct = 0 #La regla a evaluar en la lista de reglas
     ini = 0 #inicio de la parte de la hilera que se va a evaluar con la regla
     fin = ini + Reglas[reglaAct].getEntrada().__len__() #final de la parte de la hilera que se va a evaluar con la regla
-    while(reglaAct < Reglas.__len__()+1): #revision de toda la lista de Reglas
+    while(reglaAct < Reglas.__len__()+1): #revision de toda la lista de reglas
         while(fin < str(hilera).__len__()+1): #revision de toda la hilera
             if(Reglas[reglaAct].getEntrada().__len__() > hilera.__len__()):
                 # si la hilera es mas pequeña a la regla a aplicar, se pasa a la siguiente regla
