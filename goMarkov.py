@@ -1,8 +1,8 @@
 #GoMarkov
-#Proyecto de paradigmas 
+#Proyecto de paradigmas  
 #Alumnos:
 #Roger Amador Villagra
-#David 
+#David Quesada Ordóñez
 #Profesor: Msc George Alfaro
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import *
@@ -11,7 +11,7 @@ from PyQt5 import QtCore
 import os, sys
 from colorama import *
 import module as mod
-
+from AnalisisHilera import AnalisisHilera
 class Ui_UniqueWindow(object):
     #-- program functions
     def defaultFormat(self):
@@ -132,7 +132,22 @@ class Ui_UniqueWindow(object):
             msg.setInformativeText("hilera correcta")
             msg.setWindowTitle("Message")
             msg.exec_()    
-
+    
+    def searchMarkers(self):
+        self.sendValues()
+        print(len(mod.searchMarkers()))
+        for ms in mod.searchMarkers():
+            print(ms)
+    
+    def analisis(self):
+        text = self.textArea1.toPlainText()
+        rules = text[text.find("% Rules")+7:len(text)]
+        rules.rstrip('\n')
+        self.sendValues()
+        self.textArea2.clear()
+        cursor = self.textArea2.textCursor()
+        self.textArea2.insertPlainText(AnalisisHilera(mod.getChain(),rules))
+        cursor.movePosition(cursor.Right, cursor.KeepAnchor,  3)
 
     def exitApp(self):
         sys.exit()    
@@ -536,9 +551,12 @@ class Ui_UniqueWindow(object):
         self.emptybtn.clicked.connect(self.putEmpty)
         self.arrowbtn.clicked.connect(self.putArrow)
 
-        #Buttons actions
+        #Buttons main actions
         self.Run.clicked.connect(self.validateChain)
-
+        self.stepsbtn.clicked.connect(self.analisis)
+        
+        
+        
         self.retranslateUi(UniqueWindow)
         QtCore.QMetaObject.connectSlotsByName(UniqueWindow)
 
