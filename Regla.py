@@ -8,7 +8,10 @@ class Regla:
         self.etiqueta = None
         self.comentario = None
     """""
-
+    def __init__(self, entrada="", salida=""):
+        self.entrada = entrada
+        self.salida = salida
+    """
     def __init__(self, entrada="", salida="", esFinal="", numero="",etiqueta=""):
         self.entrada = entrada
         self.salida = salida
@@ -16,7 +19,7 @@ class Regla:
         self.numero = numero
         self.etiqueta = etiqueta
         self.comentario = None
-
+    """
     def getEntrada(self):
         return self.entrada
 

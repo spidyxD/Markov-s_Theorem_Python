@@ -1,0 +1,25 @@
+Descargar GIT BASH
+
+Descargar Proyecto:
+Sobre carpeta que van a descargar el proyecto
+1) Click Derecho, seleccionar "Git Bash Here"
+2) En comando de linea Git Bash poner: git clone https://github.com/jdvega21/PruebasAutomatizadas.git
+3) Listo (debe aparecer "Master" en azul en la ruta del Bash)
+
+Subir cambios:
+1) GUARDEN PRIMERO UN .ZIP del Proyecto por aquello de algun fallo
+Sobre carpeta del proyecto
+2) Click Derecho, seleccionar "Git Bash Here"
+3) git add -A
+4) git commit -m "NOMBRE DE LA VERSIÓN DEL PROYECTO" //si no están seguros del nombre preguntarme
+5) git push
+
+Descargar cambios en su proyecto porque se subió una nueva versión a GIT
+1) GUARDEN PRIMERO UN .ZIP del Proyecto por aquello de algun fallo
+Sobre carpeta del proyecto
+2) Click Derecho, seleccionar "Git Bash Here"
+3) git add -A
+4) git pull
+Para subir versión con la mezcla de lo que tenían más lo que acaban de descargar de la nueva versión
+5) git commit -m "NOMBRE DE LA VERSIÓN DEL PROYECTO" //si no están seguros del nombre preguntarme
+6) git push 

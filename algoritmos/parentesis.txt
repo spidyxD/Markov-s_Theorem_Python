@@ -1,0 +1,12 @@
+GoMarkov Project
+ 
+#symbols (,),!,m,a,l,b,i,e,n
+#vars 
+#markers 
+% Rules
+()→$
+(→!
+)→!
+!!→!
+!→.mal
+$→.bien

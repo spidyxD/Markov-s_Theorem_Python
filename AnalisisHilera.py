@@ -2,28 +2,29 @@ from Regla import Regla
 
 def getRules(rule):
     rules = []
-    for r in rules:
-        rules.append(rule)
+    aux = [] 
+    rule = rule.strip().split()
+    for r in rule:
+        aux.append(r)
+
+    for a in aux:
+        entrada = a[0:a.find("→")]
+        #print(entrada)
+        salida =  a[a.find("→")+1:len(a)]
+        #print(salida)
+        rules.append(Regla(entrada,salida))      
     return rules    
 
 
 
 def AnalisisHilera(hilera,rules):
-    Reglas= getRules(rules)
-    print(rules + " "+ hilera)
-    r0 = Regla("ab","b",True,0)
-    r1 = Regla("bb","a",True,1)
-    r2 = Regla("ca","ba",True,2)
-
-    Reglas.append(r0)
-    Reglas.append(r1)
-    Reglas.append(r2)
-
-    
-    reglaAct = 0 #La regla a evaluar en la lista de reglas
+    Reglas = getRules(rules)
+    for r in getRules(rules):
+      print("entrada: "+r.entrada +" / " +"salida: "+r.salida)  
+    reglaAct = 0 #La regla a evaluar en la lista de Reglas
     ini = 0 #inicio de la parte de la hilera que se va a evaluar con la regla
     fin = ini + Reglas[reglaAct].getEntrada().__len__() #final de la parte de la hilera que se va a evaluar con la regla
-    while(reglaAct < Reglas.__len__()+1): #revision de toda la lista de reglas
+    while(reglaAct < Reglas.__len__()+1): #revision de toda la lista de Reglas
         while(fin < str(hilera).__len__()+1): #revision de toda la hilera
             if(Reglas[reglaAct].getEntrada().__len__() > hilera.__len__()):
                 # si la hilera es mas pequeña a la regla a aplicar, se pasa a la siguiente regla
@@ -52,6 +53,7 @@ def AnalisisHilera(hilera,rules):
             fin = ini + Reglas[reglaAct].getEntrada().__len__()
         else:
             return hilera
+    print(hilera)        
     return hilera
 
-#print(AnalisisHilera("aabbbaaaaaab"))
+

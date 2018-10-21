@@ -1,0 +1,9 @@
+GoMarkov Project
+ 
+#symbols 0,1,|
+#vars 0,1
+#markers 
+% Rules
+|0→0||
+1→0|||
+0→^3

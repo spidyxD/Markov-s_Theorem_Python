@@ -32,7 +32,7 @@ class Ui_UniqueWindow(object):
          markers = text[text.find("#markers")+9:text.find("% Rules")-1] 
          markers.rstrip('\n')
          rules = text[text.find("% Rules")+7:len(text)]
-         rules.rstrip('\n')
+         #rules.rstrip('\n')
          chain = self.lineExecute.text()
          mod.getValues(symbols,variables,markers,rules,chain)
         
@@ -124,14 +124,14 @@ class Ui_UniqueWindow(object):
             msg.setInformativeText("Simbolos de entrada no coinciden con la hilera introducida")
             msg.setWindowTitle("Alert")
             msg.exec_()
-        else:
+        """else:
             #Esto se debe de comentar/eliminar al momento en que las demas funciones esten listas ya que no es necesario alertar si la cadena 
             #coincide 
             msg = QMessageBox(self.centralwidget)
             msg.setText("Success")
             msg.setInformativeText("hilera correcta")
             msg.setWindowTitle("Message")
-            msg.exec_()    
+            msg.exec_()   """ 
     
     def searchMarkers(self):
         self.sendValues()
@@ -140,6 +140,7 @@ class Ui_UniqueWindow(object):
             print(ms)
     
     def analisis(self):
+        self.validateChain()
         text = self.textArea1.toPlainText()
         rules = text[text.find("% Rules")+7:len(text)]
         rules.rstrip('\n')
@@ -552,7 +553,7 @@ class Ui_UniqueWindow(object):
         self.arrowbtn.clicked.connect(self.putArrow)
 
         #Buttons main actions
-        self.Run.clicked.connect(self.validateChain)
+        self.Run.clicked.connect(self.analisis)
         self.stepsbtn.clicked.connect(self.analisis)
         
         

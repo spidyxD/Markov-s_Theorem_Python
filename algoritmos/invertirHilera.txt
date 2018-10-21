@@ -1,0 +1,45 @@
+GoMarkov Project
+ 
+#symbols a,b,c,d,i,A,B,C,D,F,*
+#vars 
+#markers 
+% Rules
+*a→a*
+*b→b*
+*c→c*
+*d→d*
+^3*→F
+FA→Fa
+ia→iA
+Aa→aA
+Ab→bA
+Ac→cA
+Ad→dA
+AF→FA
+FB→Fb
+ib→iB
+Ba→aB
+Bb→bB
+Bc→cB
+Bd→dB
+BF→FB
+FC→Fc
+ic→iC
+Ca→aC
+Cb→bC
+Cc→cC
+Cd→dC
+CF→FC
+FD→Fd
+id→iD
+Da→aD
+Db→bD
+Dc→cD
+Dd→dD
+DF→FD
+^3D→d
+^3A→a
+^3C→c
+^3B→b
+iF→.^3
+^3→i*
