@@ -80,7 +80,11 @@ def searchMarkers():
             mrs.append(getChain()[num])
     return mrs         
 
-       
+def outFormat(t, b, e):
+    title = t
+    body = b + "\n" +"\n"+ "\n"+"\n"
+    endline = e    
+    return title + body + endline  
 
 def resultados():
    print("escriba un valor a")
