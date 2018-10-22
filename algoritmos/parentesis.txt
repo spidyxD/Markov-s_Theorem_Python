@@ -1,4 +1,7 @@
 GoMarkov Project
+
+#Con sólo que en el resultado mencione que está "mal", la respuesta es que está mal.
+#Si todas dicen bien, el resultado es psoitivo.
  
 #symbols (,),!,m,a,l,b,i,e,n
 #vars 

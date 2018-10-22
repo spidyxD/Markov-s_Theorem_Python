@@ -1,4 +1,4 @@
-﻿GoMarkov Project
+GoMarkov Project
  
 #symbols a,b,c,d,A,B,C,D,M,*,F,Z
 #vars 
@@ -9,7 +9,7 @@ Fb→bF
 Fc→cF
 Fd→dF
 F→Z
-MZ→$.
+MZ→$
 Ma→aA 
 Aa→aA
 Ab→bA
@@ -22,7 +22,7 @@ Ba→aB
 Bb→bB
 Bc→cB
 Bd→dB
-BZ->ZB
+BZ→ZB
 B→b
 Mc→cC 
 Ca→aC
@@ -38,9 +38,9 @@ Dc→cD
 Dd→dD
 DZ→ZD
 D→d
-M→.^3
+M→$
 *a→a*M
 *b→b*M
 *c→c*M
 *d→d*M
-^3→*MF
+$→*MF

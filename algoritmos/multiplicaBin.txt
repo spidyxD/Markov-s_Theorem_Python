@@ -1,6 +1,10 @@
 GoMarkov Project
  
-#symbols abcdefghijklmnopqrstuvwxyz0123456789
-#vars wxyz
-#markers a�?d
+#symbols 0,1,|,*
+#vars
+#markers 
 % Rules
+|0→0||
+1→0|
+0→
+*→

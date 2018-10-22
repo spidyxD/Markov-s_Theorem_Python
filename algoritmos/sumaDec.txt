@@ -2,5 +2,5 @@ GoMarkov Project
  
 #symbols abcdefghijklmnopqrstuvwxyz0123456789
 #vars wxyz
-#markers aﬂ?d
+#markers 
 % Rules

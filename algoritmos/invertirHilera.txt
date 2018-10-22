@@ -1,5 +1,8 @@
 GoMarkov Project
  
+#Para que este algoritmo funcione, debe de ingresar una "i" al principio del "Execute line".
+#La respuesta se da con letras masyúsculas con una "i" en el inicio.  
+ 
 #symbols a,b,c,d,i,A,B,C,D,F,*
 #vars 
 #markers 
@@ -8,7 +11,7 @@ GoMarkov Project
 *b→b*
 *c→c*
 *d→d*
-^3*→F
+$*→F
 FA→Fa
 ia→iA
 Aa→aA
@@ -37,9 +40,9 @@ Db→bD
 Dc→cD
 Dd→dD
 DF→FD
-^3D→d
-^3A→a
-^3C→c
-^3B→b
-iF→.^3
-^3→i*
+$D→d
+$A→a
+$C→c
+$B→b
+iF→$
+$→i

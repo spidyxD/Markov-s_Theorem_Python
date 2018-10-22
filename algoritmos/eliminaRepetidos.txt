@@ -1,4 +1,6 @@
 GoMarkov Project
+
+#Agregar un "A" al principio del "Execute line" para que funcione.
  
 #symbols a,b,c,d,A
 #vars 
@@ -12,5 +14,5 @@ Acc→Ac
 Ac→cA
 Add→Ad
 Ad→dA
-A→.$
-^3→A
+A→$
+$→A

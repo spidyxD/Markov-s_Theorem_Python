@@ -1,5 +1,7 @@
 GoMarkov Project
  
+#Nota: Para que este algoritmo funcione, debe de ingresar "*MF" al principio del "Execute line" 
+ 
 #symbols a,b,c,d,A,B,C,D,M,*,F,Z,/,!,&,f,l,s,o,v,e,r
 #vars a,b,c,d
 #markers 
@@ -65,9 +67,9 @@ Dc→cD
 Dd→dD
 DZ→ZD
 D→d
-M→. ^3
+M→.$
 *a→a*M
 *b→b*M
 *c→c*M
 *d→d*M
-^3 → *MF
+$→*MF
