@@ -1,0 +1,18 @@
+GoMarkov Project
+
+#Agregar un "A" al principio del "Execute line" para que funcione.
+ 
+#symbols a,b,c,d,A
+#vars 
+#markers 
+% Rules
+Aaa→Aa
+Aa→aA
+Abb→Ab
+Ab→bA
+Acc→Ac
+Ac→cA
+Add→Ad
+Ad→dA
+A→$
+$→A

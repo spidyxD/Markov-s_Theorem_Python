@@ -1,8 +1,8 @@
 #GoMarkov
-#Proyecto de paradigmas 
+#Proyecto de paradigmas  
 #Alumnos:
 #Roger Amador Villagra
-#David 
+#David Quesada Ordóñez
 #Profesor: Msc George Alfaro
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import *
@@ -11,7 +11,7 @@ from PyQt5 import QtCore
 import os, sys
 from colorama import *
 import module as mod
-
+import AnalisisHilera as analisis
 class Ui_UniqueWindow(object):
     #-- program functions
     def defaultFormat(self):
@@ -22,7 +22,13 @@ class Ui_UniqueWindow(object):
        markers = "#markers αβγδ\n"
        comentary1 = "% Rules\n"
        self.textArea1.setPlainText(dheader + symbols + variables + markers + comentary1)
-       
+
+    def defaultFormatOut(self):
+        title = "Output: \n \n \n \n"
+        body = " "+ "\n \n \n \n \n" 
+        endline = "GoMarkov project 2018"  
+        self.textArea2.setPlainText(mod.outFormat(title,body,endline))
+
     def sendValues(self):
          text = self.textArea1.toPlainText()
          symbols = text[text.find("#symbols")+9:text.find("#vars")-1]
@@ -32,10 +38,10 @@ class Ui_UniqueWindow(object):
          markers = text[text.find("#markers")+9:text.find("% Rules")-1] 
          markers.rstrip('\n')
          rules = text[text.find("% Rules")+7:len(text)]
-         rules.rstrip('\n')
+         #rules.rstrip('\n')
          chain = self.lineExecute.text()
          mod.getValues(symbols,variables,markers,rules,chain)
-        
+
      #-- Tools --
     def Undo(self):
        self.textArea1.undo()
@@ -63,7 +69,7 @@ class Ui_UniqueWindow(object):
         name = QFileDialog.getOpenFileName()
         if name[0]:
             try:
-                file = open(name[0],'r')
+                file = open(name[0],'r',encoding='utf-8')
                 with file:
                     text = file.read()
                 self.textArea1.setPlainText(text)
@@ -116,23 +122,60 @@ class Ui_UniqueWindow(object):
          msg.exec_()
 
     #funcion que valida en la interfaz el contenido de la hilera con los simbolos si no coincide muestra mensaje de error
-    def validateChain(self): 
+    def validateChain(self):
         self.sendValues()
-        if not(mod.validateSymbols()):
+        print(len(mod.getRules()))
+        if  mod.validateSymbols() == False:
             msg = QMessageBox(self.centralwidget)
             msg.setText("Warning")
-            msg.setInformativeText("Ningun simbolo de entrada coincide con la hilera introducida")
+            msg.setInformativeText("Simbolos de entrada no coinciden con la hilera introducida!!")
             msg.setWindowTitle("Alert")
             msg.exec_()
-        else:
-            #Esto se debe de comentar/eliminar al momento en que las demas funciones esten listas ya que no es necesario alertar si la cadena 
-            #coincide 
+            return False
+        if len(mod.getRules()) < 3:
             msg = QMessageBox(self.centralwidget)
-            msg.setText("Success")
-            msg.setInformativeText("hilera correcta")
-            msg.setWindowTitle("Message")
-            msg.exec_()    
+            msg.setText("Warning")
+            msg.setInformativeText("no hay reglas definidas!!")
+            msg.setWindowTitle("Alert")
+            msg.exec_()
+            return False     
+        return True    
+    
+    def searchMarkers(self):
+        self.sendValues()
+        print(len(mod.searchMarkers()))
+        for ms in mod.searchMarkers():
+            print(ms)
+    
+    def analisis(self):
+        self.sendValues()
+        if self.validateChain() == True:
+           self.textArea2.clear()
+           cursor = self.textArea2.textCursor()
+           title = "Output:" +"\n"+ "\n"+"\n"
+           body = analisis.AnalisisHilera(mod.getChain(),mod.getRules())+ "\n" +"\n"+"\n"+"\n"
+           endline = "GoMarkov" 
+           self.textArea2.setPlainText(mod.outFormat(title,body,endline))
+           cursor.movePosition(cursor.Right, cursor.KeepAnchor,  3)
+        else:
+          print("error")  
 
+    def debugger(self):
+        self.sendValues()
+        if self.validateChain() == True:
+            text = " "
+            self.textArea2.clear()
+            cursor = self.textArea2.textCursor()
+            for a in analisis.debugger(mod.getChain(),mod.getRules()):
+               text = text + a + "\n"
+
+            title = "Output:"+"\n"+"\n"
+            body = text +"\n" +"\n"+"\n" 
+            endline = "GoMarkov project 2018" 
+            self.textArea2.setPlainText(mod.outFormat(title,body,endline))   
+            cursor.movePosition(cursor.Right, cursor.KeepAnchor,  3)
+        else:
+          print("error")     
 
     def exitApp(self):
         sys.exit()    
@@ -363,6 +406,7 @@ class Ui_UniqueWindow(object):
         self.gridLayout.addWidget(self.groupPalette, 1, 3, 1, 1)
         self.textArea2 = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.textArea2.setObjectName("textArea2")
+        self.textArea2.setReadOnly(True)
         self.gridLayout.addWidget(self.textArea2, 3, 0, 1, 3)
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox.setObjectName("groupBox")
@@ -422,8 +466,8 @@ class Ui_UniqueWindow(object):
 
         self.actionDelete = QtWidgets.QAction(UniqueWindow)
         self.actionDelete.setObjectName("actionDelete")
-        self.actionDelete.setShortcut("Supr")
-        self.actionDelete.triggered.connect(self.Delete)
+        self.actionDelete.setShortcut("Ctrl+B")
+        self.actionDelete.triggered.connect(self.defaultFormat)
 
         self.actionRedo = QtWidgets.QAction(UniqueWindow)
         self.actionRedo.setObjectName("actionRedo")
@@ -460,10 +504,12 @@ class Ui_UniqueWindow(object):
         self.actionRun = QtWidgets.QAction(UniqueWindow)
         self.actionRun.setObjectName("actionRun")
         self.actionRun.setShortcut("Ctrl+R")
+        self.actionRun.triggered.connect(self.analisis)
 
         self.actionStep = QtWidgets.QAction(UniqueWindow)
         self.actionStep.setObjectName("actionStep")
         self.actionStep.setShortcut("Ctrl+T")
+        self.actionStep.triggered.connect(self.debugger)
 
         self.actionAbout = QtWidgets.QAction(UniqueWindow)
         self.actionAbout.setObjectName("actionAbout")
@@ -536,9 +582,12 @@ class Ui_UniqueWindow(object):
         self.emptybtn.clicked.connect(self.putEmpty)
         self.arrowbtn.clicked.connect(self.putArrow)
 
-        #Buttons actions
-        self.Run.clicked.connect(self.validateChain)
-
+        #Buttons main actions
+        self.Run.clicked.connect(self.analisis)
+        self.stepsbtn.clicked.connect(self.debugger)
+        
+        
+        
         self.retranslateUi(UniqueWindow)
         QtCore.QMetaObject.connectSlotsByName(UniqueWindow)
 
@@ -587,7 +636,7 @@ class Ui_UniqueWindow(object):
         self.actionExit.setText(_translate("UniqueWindow", "Exit"))
         self.actionCopy.setText(_translate("UniqueWindow", "Copy"))
         self.actionPaste.setText(_translate("UniqueWindow", "Paste"))
-        self.actionDelete.setText(_translate("UniqueWindow", "Delete"))
+        self.actionDelete.setText(_translate("UniqueWindow", "Clean screen"))
         self.actionRedo.setText(_translate("UniqueWindow", "Redo"))
         self.actionUndo.setText(_translate("UniqueWindow", "Undo"))
         self.actionOpen.setText(_translate("UniqueWindow", "Open..."))
@@ -609,6 +658,7 @@ if __name__ == "__main__":
     ui = Ui_UniqueWindow()
     ui.setupUi(UniqueWindow)
     ui.defaultFormat()
+    ui.defaultFormatOut()
     UniqueWindow.show()
     sys.exit(app.exec_())
 

@@ -1,0 +1,10 @@
+GoMarkov Project
+ 
+#symbols 0,1,|,*
+#vars
+#markers 
+% Rules
+|0→0||
+1→0|
+0→
+*→

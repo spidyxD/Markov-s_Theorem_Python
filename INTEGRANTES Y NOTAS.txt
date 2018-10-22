@@ -1,9 +1,7 @@
-# Markov-s_Theorem_Python
-impementaciÃ³n del teorema de markov para el reconocimiento de patrones y gramaticas
 
 INTEGRANTES:
 ROGER AMADOR VILLAGRE 1:00PM
-David Quesada OrdÃ³Ã±ez 1:00PM
+David Quesada Ordóñez 1:00PM
 
 ASPECTOS GENERALES:
 FRAMEWROK UTILIZADO PYQT V5

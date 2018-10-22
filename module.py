@@ -36,7 +36,7 @@ def getValues(s,v,m,r,c):
     global values
     values = v
     global markers
-    values = m
+    markers = m
     global rules 
     rules = r
     global chain 
@@ -59,25 +59,32 @@ def getChain():
 
 #funcion que valida si la hilera de entrada contiene los simbolos permitidos
 def validateSymbols():
-    flagS = None
-    #flagM = None
-    for sy in getSymbols():
-        #for m in getMarkers():
-            if not (getChain().find(sy) == -1):
-                flagS = True
-            #elif not (getChain().find(m) == -1):
-                #flagM = True
-            else:
-                for ch in getChain():
-                    if (getSymbols().find(ch) == -1):
-                       flagS = False
-                       break
-                       #flagM = False    
-                    else:
-                       flagS = True
-                       #flagM = True
-    return flagS
+    flag = None
+    searchMarkers()
+    print(getChain() + " / " + getSymbols())
+    for ch in getChain():
+        if getSymbols().find(ch) == -1:
+              if getMarkers().find(ch) == -1:
+                flag = False
+                break
+        else: flag = True           
+    return flag
 
+def searchMarkers():
+    num = 0
+    mrs = []
+    print(getMarkers() + "/" + getChain())
+    for m in getMarkers():
+        if (getChain().find(m) > -1):
+            num = getChain().find(m)
+            mrs.append(getChain()[num])
+    return mrs         
+
+def outFormat(t, b, e):
+    title = t
+    body = b + "\n" +"\n"+ "\n"+"\n"
+    endline = e    
+    return title + body + endline  
 
 def resultados():
    print("escriba un valor a")
