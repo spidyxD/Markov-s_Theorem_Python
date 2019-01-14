@@ -1,7 +1,9 @@
 # Markov-s_Theorem_Python
-impementación del teorema de markov para el reconocimiento de patrones y gramaticas
+<image src="presentation.jpg" alt="image not found">
+<p>
+Impementación del teorema de markov para el reconocimiento de patrones y gramaticas
 
-INTEGRANTES:
+Colaboradores:
 ROGER AMADOR VILLAGRE 1:00PM
 David Quesada Ordóñez 1:00PM
 
@@ -11,3 +13,4 @@ EL PROYECTO CUENTA CON EL PROGRAMA PRINCIPAL GOMARKOV Y 3 MODULOS QUE CONTIENEN 
 DE LA APLICACION: ANALISISHILERA.PY, MODULE.PY, REGLA.PY.
 PARA COMENTAR EN LA APLICACION SE PUEDE HACER ANTES DEL LA CABECERA PRINCIPAL YA QUE NO SE PUDO VALIDAR CON SIMBOLOS DENTRO DE 
 LA CABECERA
+</p>
